@@ -49,15 +49,18 @@ const deleteOption = (title: String) => {
 
 const voteTo = (title: String) => {
   if(listeningForVotes == false)
-    return;
+    return -1; // votacao fechada
   
   let temp = results.find(e => e.title === title);
 
   if (temp) {
     temp.votes++;
     socketIo.sockets.emit('Add', results);
-    // socketIo.sockets.emit('nVotes', ++count);
-  }
+
+    return 1; // registrou voto
+  } 
+
+  return 0; // não achou opção
 
 }
 const changeListeningToVotes = (status: boolean) => {
@@ -100,6 +103,11 @@ app.get('/reset', (req, res) => {
     element.votes = 0;
   })
   count = 0;
+  Object.keys(users).forEach(key => {
+    delete users[key];
+  });
+  
+
 
   res.json({
     results,
@@ -190,37 +198,51 @@ client.on('chat', (channel, userstate, message, self) => {
 
 
   // admin commands
-  if(self) {
+  if(username == "enriqut") {
     if (command === '!comecar-votacao') { 
-      listeningForVotes = true;
+      changeListeningToVotes(true);
     } else if (command === '!encerrar-votacao') {
-      listeningForVotes = false;
+      changeListeningToVotes(false);
     } else if (command === '!resetar-votacao') {
       Object.keys(results).map( (title) => {
         results[title] = 0;
       });
     }
+
+    return;
   }
   
   // public commands
-  else if (command === '!vote') {
+  if (command === '!vote') {
     // check if user has already voted
     if(users[username])
       return;
     
-    // register vote
-    results[commandOption]++;
+    if(!listeningForVotes) {
+    }
     
+    // register vote
+    console.log(`votando em ${commandOption}!!!`)
+    let res = voteTo(commandOption);
+    if(res === -1) { // votação fechada
+      client.say(channel, `Desculpe, ${username}, seu voto não foi registrado porque a votação está fechada. Espere abrir a votação.`);
+      return;
+    }
+    else if(res === 0) { // opção de votação não encontrada
+      client.say(channel, `Desculpe, ${username}, não encontramos essa opção. Tente novamente por favor.`);
+      return;
+    }
+      
     // register user
     users[username] = true;
   }
   
-  else if (command === '!cospobre') {
+  else if (command === '!descricao') {
     client.say(channel, `Command ${command} found with ${commandOption}`);
   }
 
   else {
-    client.say(channel, `Commando não encontrado`);
+    client.say(channel, `Oi, ${username}, não conseguimos encontrar esse comando 😕`);
   }
   
 });
