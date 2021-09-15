@@ -1,0 +1,41 @@
+<div class="modal fade" id="createModal" data-bs-backdrop="true" data-bs-keyboard="true" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <form class="modal-body" [formGroup]="formData" (ngSubmit)="onSubmit()">
+        <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="text-center mt-4 text-primary">Adicionar</h1>
+        <p class="text-center">Cadastrando nova opção</p>
+
+        <div class="mb-3">
+          <label for="nameInput" class="form-label">Nome</label>
+          <input class="form-control" id="nameInput" aria-describedby="nameHelp" formControlName="title">
+          <span class="text-danger"
+            *ngIf="(formDataControl.title.touched || submitted) && formDataControl.title.errors?.required">
+            Nome é obrigatório
+          </span>
+        </div>
+
+        <!-- <div class="mb-3">
+          <label for="fileInput" class="form-label">Selecione uma imagem</label>
+          <input type="file" class="form-control" id="fileInput" aria-describedby="fileHelp">
+          <span class="text-danger"
+            *ngIf="(formDataControl.file.touched || submitted) && formDataControl.file.errors?.required">
+            Imagem é obrigatória
+          </span>
+        </div> -->
+
+        <div *ngIf="!!errorMessage" class="alert alert-danger" role="alert">
+          {{errorMessage}}
+        </div>
+
+        <div class="mt-3 mb-3">
+          <button type="submit" class="btn btn-primary w-100">Adicionar</button>
+        </div>
+        <div class="mb-3">
+          <button #closeModal type="button" class="btn btn-outline-dark w-100" data-bs-dismiss="modal" aria-label="Close">Voltar</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

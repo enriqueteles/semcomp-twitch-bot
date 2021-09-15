@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col" style="margin-top: 100px;">
+    <h1 *ngIf="editMode" class="text-center text-white">Modo Edição</h1>
+    <h1 *ngIf="!editMode && !listeningToVotes" class="text-center text-white">Votação em espera</h1>
+    <h1 *ngIf="!editMode && listeningToVotes" class="text-center text-white">Contando os votos</h1>
+  </div>
+  <div class="col-1">
+    <p class="btn float-end rounded-circle bg-white" (click)="editMode = !editMode" style="margin-top: 100px;">></p>
+  </div>
+</div>
+
+<div class="row my-3" *ngIf="editMode">
+  <div class="col">
+    <h2 class="text-white">Opções</h2>
+  </div>
+  <div class="col">
+    <button type="button" class="btn btn-lg btn-light float-end" data-bs-toggle="modal" data-bs-target="#createModal">Adicionar opção</button>
+    <button type="button" class="btn btn-lg btn-danger mx-3 float-end" (click)="onReset()">Resetar</button>
+  </div>
+</div>
+
+<!-- Debug -->
+<!-- <p *ngFor="let result of results">{{ result | json }}</p>
+<p>{{ nVotes }}</p> -->
+
+<div *ngFor="let result of results">
+  <app-vote-option [data]="result" [total]="nVotes" [editMode]="editMode"></app-vote-option>
+</div>
+
+<app-create-form></app-create-form>

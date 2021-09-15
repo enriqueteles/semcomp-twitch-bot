@@ -1,0 +1,22 @@
+<div style="padding-top: 1px" *ngIf="data != undefined">
+  <img [src]="data.imageUrl ? data.imageUrl : 'https://picsum.photos/300/300'" alt="">
+  <div class="progress position-relative my-4" style="height: 80px; margin-top: 30px">
+    <div class="progress-bar" role="progressbar" [style.width.%]="(total > 0) ? ( (data.votes / total * 100).toFixed(0) ) : 0" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="text-center align-items-center d-flex position-absolute w-100 h-100 p-3 row">
+      <div class="col">
+        <h2 class="text-white">!vote {{data.title}}</h2>
+      </div>
+      <div class="col">
+        <h3 class="float-end text-white">{{ (total > 0) ? ( (data.votes / total * 100).toFixed(0) ) : 0  |number: '2.0'}}%</h3>
+      </div>
+      <p *ngIf="editMode">{{data.votes}} - {{total}}</p>
+    </div>
+  </div>
+  <div *ngIf="editMode">
+    <p class="btn btn-danger btn-sm" (click)="onDelete(data.title)">Deletar</p>
+    <label [for]="data.title + 'file-upload'">
+      <p class="btn btn-success btn-sm mx-3">Adicionar imagem</p>
+    </label>
+    <input type="file" [id]="data.title + 'file-upload'" [name]="data.title + '-filename'" class="d-none" (change)="handleImageInput($event.target)">
+  </div>
+</div>
