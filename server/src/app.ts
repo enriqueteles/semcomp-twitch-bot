@@ -155,10 +155,10 @@ const options = {
     reconnect: true,
   },
   channels: [ channel ],
-  // identity: {
-  //   username: process.env.ACCOUNT_USERNAME,
-  //   password: process.env.ACCOUNT_PASSWORD
-  // }
+  identity: {
+    username: process.env.ACCOUNT_USERNAME,
+    password: process.env.ACCOUNT_PASSWORD
+  }
 }
 
 
