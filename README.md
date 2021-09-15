@@ -5,6 +5,8 @@ Para poder executar o servidor, o node deve estar instalado na máquina e també
 
 Os comandos para executar são:
 ```bash
+cd server # entra na pasta server
+
 yarn # instala todas as dependencias necessárias
 
 yarn dev # roda o servidor localmente
@@ -14,6 +16,8 @@ yarn dev # roda o servidor localmente
 ## Rodando a aplicação
 Para a aplicação funcionar sem problemas o servidor já deve estar em execução localmente. Os comandos para executar são:
 ```bash
+cd client # entra na pasta client
+
 yarn # instala todas as dependencias necessárias
 
 yarn start # inicia a aplicação no http://localhost:4200/
