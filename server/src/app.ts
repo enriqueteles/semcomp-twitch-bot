@@ -153,7 +153,7 @@ dotenv.config({
 
 const regexpCommand = new RegExp(/^!([a-zA-Z0-9]+)(?:\W+)?(.*)?/);
 
-const channel = 'enriqut';
+const channel = 'semcomp';
 
 const options = {
   options: {
@@ -198,7 +198,7 @@ client.on('chat', (channel, userstate, message, self) => {
 
 
   // admin commands
-  if(username == "enriqut") {
+  if(username == "semcomp") {
     if (command === '!comecar-votacao') { 
       changeListeningToVotes(true);
     } else if (command === '!encerrar-votacao') {
